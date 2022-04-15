@@ -22,6 +22,8 @@ public class PersonAvalability {
 
 	// Dominio
 	private Domain<List<Integer>> domain;
+	
+	private boolean vaccinated;
 
 	public PersonAvalability(String name, List<Integer> avalability, Integer workLoad)
 			throws PersonAvalabilityException {
@@ -39,6 +41,11 @@ public class PersonAvalability {
 		findDomain(0, 0, new Integer[this.workLoad], aux);
 
 		this.domain = new Domain<>(aux);
+	}
+	
+	public PersonAvalability(String name, List<Integer> avalability, Integer workLoad, boolean vaccinated) throws PersonAvalabilityException {
+		this(name,avalability,workLoad);
+		this.vaccinated = vaccinated;
 	}
 
 	/*
@@ -92,6 +99,10 @@ public class PersonAvalability {
 
 	public Domain<List<Integer>> getDomain() {
 		return domain;
+	}
+
+	public boolean isVaccinated() {
+		return vaccinated;
 	}
 
 }

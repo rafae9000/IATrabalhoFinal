@@ -13,14 +13,13 @@ import aima.core.search.csp.solver.CspListener;
 import aima.core.search.csp.solver.CspSolver;
 import aima.core.search.csp.solver.FlexibleBacktrackingSolver;
 import aima.core.search.csp.solver.inference.AC3Strategy;
-import trabalhofinal.csp.ScheduleCSP;
+import trabalhofinal.csp.ScheduleNewNormalCSP;
 import trabalhofinal.entity.PersonAvalability;
 import trabalhofinal.exception.PersonAvalabilityException;
 import trabalhofinal.util.Printer;
 
-//Resolução do problema de agendamento basico
-public class ScheduleCspDemo {
-
+public class ScheduleNewNormalCspDemo {
+	
 	public static void main(String[] args) {
 
 		CSP<Variable, List<Integer>> csp;
@@ -38,21 +37,21 @@ public class ScheduleCspDemo {
 		
 		try {
 			
-			//Instanciando funcionario (nome, lista de disponibilidade, carga horaria)
+			//Instanciando funcionario (nome, lista de disponibilidade, carga horaria, vacinação)
 			//Pode lançar exceção do tipo PersonAvalabilityException
-			PersonAvalability p1 = new PersonAvalability("Alice", list1, 2);
-			PersonAvalability p2 = new PersonAvalability("Bob", list2, 3);
-			PersonAvalability p3 = new PersonAvalability("Charlie", list3, 1);
-			PersonAvalability p4 = new PersonAvalability("David", list4, 2);
-			PersonAvalability p5 = new PersonAvalability("Eve", list5, 4);
+			PersonAvalability p1 = new PersonAvalability("Alice", list1, 2, false);
+			PersonAvalability p2 = new PersonAvalability("Bob", list2, 3, true);
+			PersonAvalability p3 = new PersonAvalability("Charlie", list3, 1, true);
+			PersonAvalability p4 = new PersonAvalability("David", list4, 2, true);
+			PersonAvalability p5 = new PersonAvalability("Eve", list5, 4, false);
 			
 			//Lista de funcionarios
 			List<PersonAvalability> employeers = new ArrayList<PersonAvalability>(Arrays.asList(p4,p2,p3,p1,p5));
 			
 			System.out.println("PROBLEMA BASICO\n");
 			
-			//Construção do problema de agendamento basico
-			csp = new ScheduleCSP(employeers);
+			//Construção do problema de agendamento novo normal
+			csp = new ScheduleNewNormalCSP(employeers);
 			
 			//Definição do algoritmo de busca, heuristicas e inferencias utilizados
 			solver = new FlexibleBacktrackingSolver<Variable, List<Integer>>().set(CspHeuristics.mrvDeg())
@@ -62,7 +61,7 @@ public class ScheduleCspDemo {
 			stepCounter.reset();
 			solution = solver.solve(csp);
 			if (solution.isPresent())
-				Printer.printSchedule(solution.get());
+				Printer.printScheduleNewNormal(solution.get());
 			
 		} catch (PersonAvalabilityException e) {
 			e.printStackTrace();
@@ -72,7 +71,4 @@ public class ScheduleCspDemo {
 		
 
 	}
-
-
-
 }

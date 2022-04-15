@@ -25,8 +25,10 @@ public class Printer {
 		for (Integer i = 0; i < lastWork; i++) {
 			for (Variable var : schedule.getVariables()) {
 				List<Integer> values = schedule.getValue(var);
-				if (values.contains(i + 1))
+				if (values.contains(i + 1)) {
 					formatSchedule.set(i, (i + 1) + " - " + var.getName());
+					break;
+				}
 			}
 		}
 		// Particiona o "formatSchedule" em sublistas
@@ -35,7 +37,40 @@ public class Printer {
 			System.out.println(line + "\n");
 		}
 	}
+	
+	public static void printScheduleNewNormal(Assignment<Variable, List<Integer>> schedule) {
 
+		Integer lastWork = getLastWork(schedule);
+		
+		// Lista que mostrará o agendamento de maneira mais clara
+		List<String> formatSchedule = new ArrayList<String>(lastWork);
+
+		//Inicialmente colocar todos os horarios como vagos 
+		for (int i = 0; i < lastWork; i++)
+			formatSchedule.add(i, (i + 1) + " - ####");
+		
+		//Popular os horarios com seus repectivos funcionarios
+		for (Integer i = 0; i < lastWork; i++) {
+			String aux = "";
+			for (Variable var : schedule.getVariables()) {
+				List<Integer> values = schedule.getValue(var);
+				if (values.contains(i + 1)) {
+					if(aux.isEmpty())
+						aux = (i + 1) + " - " + var.getName();
+					else
+						aux = aux + "/" + var.getName();	
+				}
+			}
+			if(!aux.isEmpty())
+				formatSchedule.set(i,aux);
+		}
+		// Particiona o "formatSchedule" em sublistas
+		// Cada sublista pode ter no maximo 12 horarios
+		for (List<?> line : Partition.ofSize(formatSchedule, 12)) {
+			System.out.println(line + "\n");
+		}
+	}
+	
 	// Encontra o ultimo horario de trabalho do agendamento
 	public static Integer getLastWork(Assignment<Variable, List<Integer>> schedule) {
 
