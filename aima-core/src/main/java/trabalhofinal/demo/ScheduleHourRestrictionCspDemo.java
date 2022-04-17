@@ -34,24 +34,25 @@ public class ScheduleHourRestrictionCspDemo {
 		Integer maxHour = 21;
 		
 		//Listas de disponibilidades
-		List<Integer> list1 = new ArrayList<Integer>(Arrays.asList(21, 13, 22, 4, 19));
-		List<Integer> list2 = new ArrayList<Integer>(Arrays.asList(10, 9, 6, 21, 15, 14));
-		List<Integer> list3 = new ArrayList<Integer>(Arrays.asList(5, 23, 10, 8, 22, 21, 14, 13));
-		List<Integer> list4 = new ArrayList<Integer>(Arrays.asList(1, 23, 4, 7, 6, 5, 19, 3));
-		List<Integer> list5 = new ArrayList<Integer>(Arrays.asList(2, 14, 7, 10, 21, 13, 4, 15, 18, 11));
+		List<Integer> list1 = new ArrayList<Integer>(Arrays.asList(4, 13, 19, 21, 22)); 
+		List<Integer> list2 = new ArrayList<Integer>(Arrays.asList(6, 9, 10, 14, 15, 21));
+		List<Integer> list3 = new ArrayList<Integer>(Arrays.asList(5, 8, 10, 13, 14, 21, 22, 23));
+		List<Integer> list4 = new ArrayList<Integer>(Arrays.asList(1, 3, 4, 5, 6, 7, 19, 23));
+		List<Integer> list5 = new ArrayList<Integer>(Arrays.asList(2, 4, 7, 10, 11, 13, 14, 15, 18, 21));
 		
 		try {
 			
-			//Instanciando funcionario (nome, Listas de disponibilidades, carga horaria)
+			//Instanciando funcionario (nome, lista de disponibilidade, carga horaria)
 			//Pode lançar exceção do tipo PersonAvalabilityException
-			PersonAvalability p1 = new PersonAvalability("Alice", list1, 2);
-			PersonAvalability p2 = new PersonAvalability("Bob", list2, 3);
-			PersonAvalability p3 = new PersonAvalability("Charlie", list3, 1);
-			PersonAvalability p4 = new PersonAvalability("David", list4, 2);
-			PersonAvalability p5 = new PersonAvalability("Eve", list5, 4);
+			PersonAvalability alice = new PersonAvalability("Alice", list1, 2);
+			PersonAvalability bob = new PersonAvalability("Bob", list2, 3);
+			PersonAvalability charlie = new PersonAvalability("Charlie", list3, 1);
+			PersonAvalability david = new PersonAvalability("David", list4, 2);
+			PersonAvalability eve = new PersonAvalability("Eve", list5, 4);
 			
 			//Lista de funcionarios
-			List<PersonAvalability> employeers = new ArrayList<PersonAvalability>(Arrays.asList(p5,p3,p1,p2,p4));
+			List<PersonAvalability> employeers = new ArrayList<PersonAvalability>(
+					Arrays.asList(david, bob, charlie, alice, eve));
 			
 			System.out.println("PROBLEMA COM RETRIÇÃO DE HORAS (min = "+minHour+", max = "+maxHour+")");
 			

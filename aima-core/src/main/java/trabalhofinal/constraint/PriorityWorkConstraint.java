@@ -8,16 +8,18 @@ import aima.core.search.csp.Constraint;
 import aima.core.search.csp.Variable;
 
 /*
-	Restrição que receber 2 listas de horarios e verificar se não possuem valores iguais
- */
+	Restrição que receber 2 listas de horarios(list1 e list2)
+	Todos os valores de list1 devem preceder list2 para que a restrição seja satisfeita
+*/
 
-public class NotCommonElementsListConstraint<VAR extends Variable, VAL> implements Constraint<VAR, VAL> {
+public class PriorityWorkConstraint<VAR extends Variable, VAL> implements Constraint<VAR, VAL> {
 
 	private VAR var1;
 	private VAR var2;
 	private List<VAR> scope;
 
-	public NotCommonElementsListConstraint(VAR var1, VAR var2) {
+	public PriorityWorkConstraint(VAR var1, VAR var2) {
+		super();
 		this.var1 = var1;
 		this.var2 = var2;
 		scope = new ArrayList<>(2);
@@ -38,9 +40,11 @@ public class NotCommonElementsListConstraint<VAR extends Variable, VAL> implemen
 		if (list1 == null || list1.isEmpty() || list2 == null || list2.isEmpty())
 			return true;
 
-		for (Integer value : list1) {
-			if (list2.contains(value))
-				return false;
+		for (Integer value1 : list1) {
+			for (Integer value2 : list2) {
+				if (value1 > value2)
+					return false;
+			}
 		}
 
 		return true;

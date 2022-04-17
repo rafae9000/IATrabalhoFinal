@@ -20,10 +20,14 @@ public class PersonAvalability {
 	// Carga horaria
 	private Integer workLoad;
 
-	// Dominio
+	// Dominio do funcionario
 	private Domain<List<Integer>> domain;
 	
+	// Indicador de vacinação
 	private boolean vaccinated;
+	
+	// Lista de nomes do funcionario que tem precedencia sobre você
+	private List<String> priorityPersons = new ArrayList<String>();
 
 	public PersonAvalability(String name, List<Integer> avalability, Integer workLoad)
 			throws PersonAvalabilityException {
@@ -103,6 +107,14 @@ public class PersonAvalability {
 
 	public boolean isVaccinated() {
 		return vaccinated;
+	}
+
+	public List<String> getPriorityPersons() {
+		return priorityPersons;
+	}
+
+	public void setPriorityPersons(List<String> priorityPersons) {
+		this.priorityPersons = priorityPersons;
 	}
 
 }
