@@ -11,13 +11,13 @@ import aima.core.search.csp.Variable;
 	Restrição que receber 2 listas de horarios e verificar se não possuem valores iguais
  */
 
-public class NotCommonElementsListConstraint<VAR extends Variable, VAL> implements Constraint<VAR, VAL> {
+public class NotCommonHoursConstraint<VAR extends Variable, VAL> implements Constraint<VAR, VAL> {
 
 	private VAR var1;
 	private VAR var2;
 	private List<VAR> scope;
 
-	public NotCommonElementsListConstraint(VAR var1, VAR var2) {
+	public NotCommonHoursConstraint(VAR var1, VAR var2) {
 		this.var1 = var1;
 		this.var2 = var2;
 		scope = new ArrayList<>(2);
