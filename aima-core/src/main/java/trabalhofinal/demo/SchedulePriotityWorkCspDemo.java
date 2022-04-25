@@ -55,7 +55,7 @@ public class SchedulePriotityWorkCspDemo {
 
 			System.out.println("PROBLEMA COM PRIORIDADE DE TRABALHO\n");
 
-			// Construção do problema de agendamento basico
+			// Construção do problema de agendamento com prioridade de trabalho
 			csp = new SchedulePriotityWorkCSP(employeers);
 
 			// Definição do algoritmo de busca, heuristicas e inferencias utilizados

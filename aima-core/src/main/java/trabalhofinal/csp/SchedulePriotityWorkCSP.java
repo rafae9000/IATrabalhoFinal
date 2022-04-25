@@ -38,15 +38,18 @@ public class SchedulePriotityWorkCSP extends CSP<Variable, List<Integer>> {
 
 		// Adiciona as restrições de precedencia de trabalho
 		for (int i = 0; i < size; i++) {
+			
 			Variable var1 = getVariables().get(i);
+			String name1 = var1.getName();
+			
 			for (int j = 0; j < size; j++) {
 				if (i != j) {
+					
 					Variable var2 = getVariables().get(j);
-					String name1 = var1.getName();
 					List<String> priorities = employeers.get(j).getPriorityPersons();
 
 					if (verifyPriority(name1, priorities))
-						// var1 tem precedencia sobre var2
+						//restrição estabelece que var1 tem precedencia sobre var2
 						addConstraint(new PriorityWorkConstraint<>(var1, var2));
 
 				}
