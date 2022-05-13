@@ -54,7 +54,7 @@ public class ScheduleHourRestrictionCspDemo {
 			List<PersonAvalability> employeers = new ArrayList<PersonAvalability>(
 					Arrays.asList(david, bob, charlie, alice, eve));
 			
-			System.out.println("PROBLEMA COM RETRIÇÃO DE HORAS (min = "+minHour+", max = "+maxHour+")");
+			System.out.println("PROBLEMA COM RETRIÇÃO DE HORAS (min = "+minHour+", max = "+maxHour+")\n");
 			
 			//Construção do problema de agendamento com restrição de horario
 			//Pode lançar exceção do tipo ScheduleHourRestrictionException
@@ -69,7 +69,7 @@ public class ScheduleHourRestrictionCspDemo {
 			solution = solver.solve(csp);
 			
 			if (solution.isPresent())
-				Printer.printSchedule(solution.get());
+				Printer.showTable(solution.get());
 			
 		} catch (PersonAvalabilityException e) {
 			e.printStackTrace();

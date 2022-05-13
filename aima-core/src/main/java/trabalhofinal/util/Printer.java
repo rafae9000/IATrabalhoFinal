@@ -1,92 +1,75 @@
 package trabalhofinal.util;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.Variable;
 
 public class Printer {
-	
-	// Imprime o agendamento de forma mais visivel no console,
-	// sendo que cada linha do agendamento no maximo 12 horarios
-	public static void printSchedule(Assignment<Variable, List<Integer>> schedule) {
 
-		Integer lastWork = getLastWork(schedule);
-		
-		// Lista que mostrará o agendamento de maneira mais clara
-		List<String> formatSchedule = new ArrayList<String>(lastWork);
-
-		//Inicialmente colocar todos os horarios como vagos 
-		for (int i = 0; i < lastWork; i++)
-			formatSchedule.add(i, (i + 1) + " - ####");
-		
-		//Popular os horarios com seus repectivos funcionarios
-		for (Integer i = 0; i < lastWork; i++) {
-			for (Variable var : schedule.getVariables()) {
-				List<Integer> values = schedule.getValue(var);
-				if (values.contains(i + 1)) {
-					formatSchedule.set(i, (i + 1) + " - " + var.getName());
-					break;
-				}
-			}
-		}
-		// Particiona o "formatSchedule" em sublistas
-		// Cada sublista pode ter no maximo 12 horarios
-		for (List<?> line : Partition.ofSize(formatSchedule, 12)) {
-			System.out.println(line + "\n");
-		}
-	}
-	
-	public static void printScheduleNewNormal(Assignment<Variable, List<Integer>> schedule) {
-
-		Integer lastWork = getLastWork(schedule);
-		
-		// Lista que mostrará o agendamento de maneira mais clara
-		List<String> formatSchedule = new ArrayList<String>(lastWork);
-
-		//Inicialmente colocar todos os horarios como vagos 
-		for (int i = 0; i < lastWork; i++)
-			formatSchedule.add(i, (i + 1) + " - ####");
-		
-		//Popular os horarios com seus repectivos funcionarios
-		for (Integer i = 0; i < lastWork; i++) {
-			String aux = "";
-			for (Variable var : schedule.getVariables()) {
-				List<Integer> values = schedule.getValue(var);
-				if (values.contains(i + 1)) {
-					if(aux.isEmpty())
-						aux = (i + 1) + " - " + var.getName();
-					else
-						aux = aux + "/" + var.getName();	
-				}
-			}
-			if(!aux.isEmpty())
-				formatSchedule.set(i,aux);
-		}
-		// Particiona o "formatSchedule" em sublistas
-		// Cada sublista pode ter no maximo 12 horarios
-		for (List<?> line : Partition.ofSize(formatSchedule, 12)) {
-			System.out.println(line + "\n");
-		}
-	}
-	
-	// Encontra o ultimo horario de trabalho do agendamento
-	public static Integer getLastWork(Assignment<Variable, List<Integer>> schedule) {
+	//Imprime a tabela de horarios dos funcionarios
+	public static void showTable(Assignment<Variable, List<Integer>> schedule) {
 
 		Integer lastWork = Integer.MIN_VALUE;
+		List<Variable> variables = schedule.getVariables();
+		Integer biggestNameLenght = getBiggestName(variables).length();
 
-		for (Variable employeer : schedule.getVariables()) {
+		variables.sort(Comparator.comparing(Variable::getName));
+
+		List<Integer> hours = new ArrayList<Integer>(24);
+		for (int i = 0; i < 24; i++)
+			hours.add(i + 1);
+
+		for (int i = 0; i < biggestNameLenght + 4; i++) {
+			System.out.print(" ");
+		}
+
+		for (Integer hour : hours) {
+			if (hour < 10)
+				System.out.print(hour + "  ");
+			else
+				System.out.print(hour + " ");
+		}
+		System.out.println("\n");
+
+		for (Variable employeer : variables) {
+
+			List<Integer> tableRow = new ArrayList<Integer>(24);
+			List<Integer> employeerSchedule = schedule.getValue(employeer);
+
+			for (int i = 0; i < 24; i++) {
+				if (employeerSchedule.contains(i + 1))
+					tableRow.add(1);
+				else
+					tableRow.add(0);
+			}
+
+			Integer espacamento = biggestNameLenght - employeer.getName().length() + 4;
+
+			System.out.print(employeer.getName());
+			for (int i = 0; i < espacamento; i++) {
+				System.out.print(" ");
+			}
+			for (int i = 0; i < 24; i++) {
+				if (i + 1 == 9)
+					System.out.print(tableRow.get(i) + "   ");
+				else
+					System.out.print(tableRow.get(i) + "  ");
+			}
+
+			System.out.println("\n");
 
 			// Armazena o ultimo horario de trabalho do funcionario em questão
 			Integer employeerLastWork = getMax(schedule.getValue(employeer));
 
-			//Compara se o horario encontrado é mais tarde que o anterior
+			// Compara se o horario encontrado é mais tarde que o anterior
 			if (employeerLastWork > lastWork)
 				lastWork = employeerLastWork;
 		}
 
-		return lastWork;
+		System.out.println("Último Horário:" + lastWork + "\n");
 	}
 
 	// Encontra o maior valor de uma lista
@@ -98,5 +81,18 @@ public class Printer {
 			}
 		}
 		return max;
+	}
+
+	// Retorna o maior nome entre os funcionarios da empresa
+	public static String getBiggestName(List<Variable> variables) {
+		String biggestName = "";
+
+		for (Variable employeer : variables) {
+			String name = employeer.getName();
+			if (name.length() > biggestName.length())
+				biggestName = name;
+		}
+
+		return biggestName;
 	}
 }

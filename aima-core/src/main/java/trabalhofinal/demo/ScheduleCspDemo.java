@@ -63,7 +63,7 @@ public class ScheduleCspDemo {
 			stepCounter.reset();
 			solution = solver.solve(csp);
 			if (solution.isPresent())
-				Printer.printSchedule(solution.get());
+				Printer.showTable(solution.get());
 			
 		} catch (PersonAvalabilityException e) {
 			e.printStackTrace();

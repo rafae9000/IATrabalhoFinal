@@ -63,7 +63,7 @@ public class ScheduleNewNormalCspDemo {
 			stepCounter.reset();
 			solution = solver.solve(csp);
 			if (solution.isPresent())
-				Printer.printScheduleNewNormal(solution.get());
+				Printer.showTable(solution.get());
 			
 		} catch (PersonAvalabilityException e) {
 			e.printStackTrace();
