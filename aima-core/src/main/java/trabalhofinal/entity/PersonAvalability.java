@@ -64,10 +64,10 @@ public class PersonAvalability {
 	 * 
 	 * fonte: https://www.geeksforgeeks.org/print-subsets-given-size-set/
 	 */
-	public void findDomain(int index, int i, Integer data[], List<List<Integer>> result) {
+	public void findDomain(int indexData, int indexAvalability, Integer data[], List<List<Integer>> result) {
 
 		// Foi encontrada uma nova combinação de horario
-		if (index == this.workLoad) {
+		if (indexData == this.workLoad) {
 
 			List<Integer> value = new ArrayList<Integer>();
 			for (int j = 0; j < workLoad; j++)
@@ -79,14 +79,14 @@ public class PersonAvalability {
 		}
 
 		// Todos o valores da lista de disponibilidade foram usados
-		if (i >= this.avalability.size())
+		if (indexAvalability >= this.avalability.size())
 			return;
 
-		data[index] = this.avalability.get(i);
+		data[indexData] = this.avalability.get(indexAvalability);
 
-		findDomain(index + 1, i + 1, data, result);
+		findDomain(indexData + 1, indexAvalability + 1, data, result);
 
-		findDomain(index, i + 1, data, result);
+		findDomain(indexData, indexAvalability + 1, data, result);
 	}
 
 	public List<Integer> getAvalability() {

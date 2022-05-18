@@ -28,17 +28,17 @@ public class ScheduleHourRestrictionCSP extends CSP<Variable, List<Integer>> {
 			PersonAvalability employeer = employeers.get(i);
 			String name = employeer.getPerson().getName();
 			Integer workLoad = employeer.getWorkLoad();
+			List<Integer> avalability = employeer.getAvalability();
 
 			// Nova lista de disponibilidade do funcionario,estando de acordo com o
 			// funcionamento da empresa
-			List<Integer> newAvalability = applyHourRestriction(employeer.getAvalability(), minHour, maxHour);
+			List<Integer> newAvalability = applyHourRestriction(avalability, minHour, maxHour);
 
 			try {
 
 				// Aqui é verificado se o funcionario consegue cumprir sua carga horaria com a
 				// nova lista de disponibilidade
-				employeer = new PersonAvalability(employeer.getPerson().getName(), newAvalability,
-						employeer.getWorkLoad());
+				employeer = new PersonAvalability(name, newAvalability, workLoad);
 
 			} catch (PersonAvalabilityException e) {
 				throw new ScheduleHourRestrictionException("Com a aplicação de restrições de horario, o empregado "

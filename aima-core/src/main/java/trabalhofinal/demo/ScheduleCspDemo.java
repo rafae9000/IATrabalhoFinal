@@ -56,7 +56,8 @@ public class ScheduleCspDemo {
 			csp = new ScheduleCSP(employeers);
 			
 			//Definição do algoritmo de busca, heuristicas e inferencias utilizados
-			solver = new FlexibleBacktrackingSolver<Variable, List<Integer>>().set(CspHeuristics.mrvDeg())
+			solver = new FlexibleBacktrackingSolver<Variable, List<Integer>>()
+					.set(CspHeuristics.mrv())
 					.set(new AC3Strategy<Variable, List<Integer>>());
 			
 			solver.addCspListener(stepCounter);
